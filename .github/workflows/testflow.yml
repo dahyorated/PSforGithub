@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  build:
+
+    runs-on: windows-2019
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run a one-line script
+      run: 
+        write-host "Hello world"
+      shell: powershell 
+
+    - name: Get Repos
+      run: ./Snippet/getrepo.ps1
+      env: 
+        PAT: ${{ secrets.TBCTDEV_PAT }}
+        OrgName: TBCTSystems
+      shell: pwsh
+
+    - name: Get Runners
+      run: ./Snippet/getrunners.ps1
+      env: 
+        PAT: ${{ secrets.ORASI_SECRET }}
+        OrgName: TBCTSystems
+      shell: pwsh
